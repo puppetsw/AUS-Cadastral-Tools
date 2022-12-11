@@ -16,13 +16,13 @@ public static class PointUtils
     /// </summary>
     public static void Create_At_Angle_And_Distance(Action<Transaction, Point3d> createAction)
     {
-        if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalisedString("SpecifyBasePoint")}", out Point3d basePoint))
+        if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifyBasePoint")}", out Point3d basePoint))
             return;
 
-        if (!EditorUtils.TryGetAngle($"\n{ResourceHelpers.GetLocalisedString("SpecifyBearing")}", basePoint, out var angle))
+        if (!EditorUtils.TryGetAngle($"\n{ResourceHelpers.GetLocalizedString("SpecifyBearing")}", basePoint, out var angle))
             return;
 
-        if (!EditorUtils.TryGetDistance($"\n{ResourceHelpers.GetLocalisedString("SpecifyDistance")}", basePoint, out var dist))
+        if (!EditorUtils.TryGetDistance($"\n{ResourceHelpers.GetLocalizedString("SpecifyDistance")}", basePoint, out var dist))
             return;
 
         if (dist == null)
@@ -378,21 +378,21 @@ public static class PointUtils
             graphics.DrawLine(secondLineToOffset, TransientDrawingMode.Highlight);
 
             // Prompt for offset distance.
-            if (!EditorUtils.TryGetDistance("\n" + ResourceHelpers.GetLocalisedString("ACAD_OffsetDistance"), out var dist))
+            if (!EditorUtils.TryGetDistance("\n" + ResourceHelpers.GetLocalizedString("ACAD_OffsetDistance"), out var dist))
                 return;
 
             if (dist == null)
                 return;
 
             // Pick offset side.
-            if (!EditorUtils.TryGetPoint("\n" + ResourceHelpers.GetLocalisedString("ACAD_PickOffsetSide"), out Point3d offsetPoint))
+            if (!EditorUtils.TryGetPoint("\n" + ResourceHelpers.GetLocalizedString("ACAD_PickOffsetSide"), out Point3d offsetPoint))
                 return;
 
             Line firstOffsetLine = LineUtils.Offset(firstLineToOffset, dist.Value, offsetPoint);
             Line secondOffsetLine = LineUtils.Offset(secondLineToOffset, dist.Value, offsetPoint);
             Point intersectionPoint = LineUtils.FindIntersectionPoint(firstOffsetLine, secondOffsetLine);
 
-            var pko = new PromptKeywordOptions("\n" + ResourceHelpers.GetLocalisedString("ACAD_AcceptPosition")) { AppendKeywordsToMessage = true, AllowNone = true };
+            var pko = new PromptKeywordOptions("\n" + ResourceHelpers.GetLocalizedString("ACAD_AcceptPosition")) { AppendKeywordsToMessage = true, AllowNone = true };
             pko.Keywords.Add(Keywords.ACCEPT);
             pko.Keywords.Add(Keywords.CANCEL);
             pko.Keywords.Default = Keywords.ACCEPT;
@@ -541,13 +541,13 @@ public static class PointUtils
             if (basePoint == line.StartPoint)
                 angle = angle.Flip();
 
-            if (!EditorUtils.TryGetDistance("\n" + ResourceHelpers.GetLocalisedString("ACAD_OffsetDistance"), basePoint, out var dist))
+            if (!EditorUtils.TryGetDistance("\n" + ResourceHelpers.GetLocalizedString("ACAD_OffsetDistance"), basePoint, out var dist))
                 return;
 
             if (dist == null)
                 return;
 
-            var pko = new PromptKeywordOptions("\n" + ResourceHelpers.GetLocalisedString("ACAD_AcceptPosition")) { AppendKeywordsToMessage = true, AllowNone = true };
+            var pko = new PromptKeywordOptions("\n" + ResourceHelpers.GetLocalizedString("ACAD_AcceptPosition")) { AppendKeywordsToMessage = true, AllowNone = true };
             pko.Keywords.Add(Keywords.ACCEPT);
             pko.Keywords.Add(Keywords.CANCEL);
             pko.Keywords.Add(Keywords.FLIP);

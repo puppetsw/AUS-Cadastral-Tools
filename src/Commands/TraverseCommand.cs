@@ -36,7 +36,7 @@ public class TraverseCommand : IAcadCommand
 
         return _currentUnitType switch
         {
-            UnitType.Metre => !EditorUtils.TryGetDistance(string.Format(ResourceHelpers.GetLocalisedString("SpecifyDistanceInOr"), GetUnitsString()), basePoint, new[] { ResourceHelpers.GetLocalisedString("Units") }, ResourceHelpers.GetLocalisedString("Units"), out keyword, out double? distance) ? null : distance,
+            UnitType.Metre => !EditorUtils.TryGetDistance(string.Format(ResourceHelpers.GetLocalizedString("SpecifyDistanceInOr"), GetUnitsString()), basePoint, new[] { ResourceHelpers.GetLocalizedString("Units") }, ResourceHelpers.GetLocalizedString("Units"), out keyword, out double? distance) ? null : distance,
             UnitType.Feet => GetFeetAndInches(basePoint, out keyword),
             UnitType.Link => GetLinks(basePoint, out keyword),
             _ => throw new ArgumentOutOfRangeException()
@@ -46,9 +46,9 @@ public class TraverseCommand : IAcadCommand
     private double? GetLinks(Point3d basePoint, out string keyword)
     {
         if (!EditorUtils.TryGetDistance(
-                string.Format(ResourceHelpers.GetLocalisedString("SpecifyDistanceInOr"), GetUnitsString()),
-                basePoint, new[] { ResourceHelpers.GetLocalisedString("Units") },
-                ResourceHelpers.GetLocalisedString("Units"), out keyword, out double? links))
+                string.Format(ResourceHelpers.GetLocalizedString("SpecifyDistanceInOr"), GetUnitsString()),
+                basePoint, new[] { ResourceHelpers.GetLocalizedString("Units") },
+                ResourceHelpers.GetLocalizedString("Units"), out keyword, out double? links))
             return null;
 
         if (links == null)
@@ -61,15 +61,15 @@ public class TraverseCommand : IAcadCommand
     private double? GetFeetAndInches(Point3d basePoint, out string keyword)
     {
         if (!EditorUtils.TryGetDistance(
-                string.Format(ResourceHelpers.GetLocalisedString("SpecifyDistanceInOr"), GetUnitsString()),
-                basePoint, new[] { ResourceHelpers.GetLocalisedString("Units") },
-                ResourceHelpers.GetLocalisedString("Units"), out keyword, out double? feet))
+                string.Format(ResourceHelpers.GetLocalizedString("SpecifyDistanceInOr"), GetUnitsString()),
+                basePoint, new[] { ResourceHelpers.GetLocalizedString("Units") },
+                ResourceHelpers.GetLocalizedString("Units"), out keyword, out double? feet))
             return null;
 
         if (feet == null || !string.IsNullOrEmpty(keyword))
             return null;
 
-        if (!EditorUtils.TryGetDouble(ResourceHelpers.GetLocalisedString("SpecifyInches"), out double? inches,
+        if (!EditorUtils.TryGetDouble(ResourceHelpers.GetLocalizedString("SpecifyInches"), out double? inches,
                 useDefaultValue: true, defaultValue: 0))
             return null;
 
@@ -85,9 +85,9 @@ public class TraverseCommand : IAcadCommand
     {
         return _currentUnitType switch
         {
-            UnitType.Metre => ResourceHelpers.GetLocalisedString("Metres").ToLower(),
-            UnitType.Feet => ResourceHelpers.GetLocalisedString("Feet").ToLower(),
-            UnitType.Link => ResourceHelpers.GetLocalisedString("Links").ToUpper(),
+            UnitType.Metre => ResourceHelpers.GetLocalizedString("Metres").ToLower(),
+            UnitType.Feet => ResourceHelpers.GetLocalizedString("Feet").ToLower(),
+            UnitType.Link => ResourceHelpers.GetLocalizedString("Links").ToUpper(),
             _ => throw new ArgumentOutOfRangeException()
         };
     }
@@ -98,7 +98,7 @@ public class TraverseCommand : IAcadCommand
 
         try
         {
-            if (!EditorUtils.TryGetPoint(ResourceHelpers.GetLocalisedString("SpecifyBasePoint"), out Point3d basePoint))
+            if (!EditorUtils.TryGetPoint(ResourceHelpers.GetLocalizedString("SpecifyBasePoint"), out Point3d basePoint))
                 return;
 
             AcadApp.Editor.WriteMessage("\n");
@@ -107,7 +107,7 @@ public class TraverseCommand : IAcadCommand
 
             do
             {
-                if (!EditorUtils.TryGetAngle(ResourceHelpers.GetLocalisedString("SpecifyBearingOr"), basePoint, out var bearing))
+                if (!EditorUtils.TryGetAngle(ResourceHelpers.GetLocalizedString("SpecifyBearingOr"), basePoint, out var bearing))
                     return;
 
                 if (bearing == null)
@@ -129,9 +129,9 @@ public class TraverseCommand : IAcadCommand
 
                     if (!string.IsNullOrEmpty(keyword))
                     {
-                        if (string.Equals(keyword, ResourceHelpers.GetLocalisedString("Units"), StringComparison.CurrentCultureIgnoreCase))
+                        if (string.Equals(keyword, ResourceHelpers.GetLocalizedString("Units"), StringComparison.CurrentCultureIgnoreCase))
                         {
-                            var pkoUnits = new PromptKeywordOptions(ResourceHelpers.GetLocalisedString("SpecifyUnits"))
+                            var pkoUnits = new PromptKeywordOptions(ResourceHelpers.GetLocalizedString("SpecifyUnits"))
                             {
                                 AppendKeywordsToMessage = true
                             };
@@ -166,7 +166,7 @@ public class TraverseCommand : IAcadCommand
                 bool traverseAccepted = false;
                 do
                 {
-                    var pko = new PromptKeywordOptions(ResourceHelpers.GetLocalisedString("AcceptAndContinue"))
+                    var pko = new PromptKeywordOptions(ResourceHelpers.GetLocalizedString("AcceptAndContinue"))
                     {
                         AppendKeywordsToMessage = true
                     };

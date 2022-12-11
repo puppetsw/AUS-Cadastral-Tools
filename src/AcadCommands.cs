@@ -95,15 +95,15 @@ public static class AcadCommands
     }
 
     private static void ExecuteCommand<T>() where T : IAcadCommand
-{
-    try
     {
-        var cmd = Activator.CreateInstance<T>();
-        cmd.Execute();
+        try
+        {
+            var cmd = Activator.CreateInstance<T>();
+            cmd.Execute();
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+        }
     }
-    catch (Exception ex)
-    {
-        Debug.WriteLine(ex.Message);
-    }
-}
 }

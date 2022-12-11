@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 
 namespace AUS_Cadastral_Tools.Helpers;
 
@@ -12,7 +14,7 @@ public static class AngleHelpers
     /// <param name="angle">The <see cref="Angle"/> to convert.</param>
     /// <returns>A double representing the <see cref="Angle"/> in decimal degrees.</returns>
     /// <remarks>The returned value is rounded to 4 decimal places, unless otherwise specified.</remarks>
-    public static double ToDecimalDegrees(this Angle angle)
+    public static double ToDecimalDegrees(this Angle? angle)
     {
         if (angle == null)
             return 0;

@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace AUS_Cadastral_Tools;
@@ -117,7 +119,7 @@ public sealed class Angle : IEquatable<Angle>
     /// <param name="bearing">The bearing.</param>
     /// <param name="angle">The angle.</param>
     /// <returns><c>true</c> if <c>bearing</c> was converted successfully, <c>false</c> otherwise.</returns>
-    public static bool TryParse(double? bearing, out Angle angle)
+    public static bool TryParse(double? bearing, out Angle? angle)
     {
         angle = null;
 
@@ -277,7 +279,7 @@ public sealed class Angle : IEquatable<Angle>
 
     public bool IsZero => Degrees == 0 && Minutes == 0 && Seconds == 0;
 
-    public bool Equals(Angle other)
+    public bool Equals(Angle? other)
     {
         if (other == null)
             return false;

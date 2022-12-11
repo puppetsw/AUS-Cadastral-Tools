@@ -35,16 +35,11 @@ namespace AUS_Cadastral_Tools;
 /// </example>
 public sealed class TransientGraphics : IDisposable
 {
-    private readonly List<TransientDrawable> _drawables;
+    private readonly List<TransientDrawable> _drawables = new();
 
     private const string DASHED_LINE_TYPE = "DASHED";
 
     public Color Color { get; } = Color.FromColorIndex(ColorMethod.ByPen, Settings.TransientColorIndex);
-
-    public TransientGraphics()
-    {
-        _drawables = new List<TransientDrawable>();
-    }
 
     private static double ScreenSize(int numPix)
     {
@@ -373,44 +368,34 @@ public sealed class TransientGraphics : IDisposable
 
     private static ObjectId? GetTextStyleId()
     {
-        using (var tr = AcadApp.StartLockedTransaction())
+        using var tr = AcadApp.StartLockedTransaction();
+
+        var tsTable = (TextStyleTable)tr.GetObject(AcadApp.ActiveDatabase.TextStyleTableId, OpenMode.ForRead);
+
+        ObjectId textStyleId;
+
+        if (!tsTable.Has(TEXT_STYLE_NAME))
         {
-            var tsTable = (TextStyleTable)tr.GetObject(AcadApp.ActiveDatabase.TextStyleTableId, OpenMode.ForRead);
-
-            if (tsTable == null)
+            tsTable.UpgradeOpen();
+            var textStyle = new TextStyleTableRecord
             {
-                tr.Commit();
-                return null;
-            }
-
-            ObjectId textStyleId;
-
-            if (!tsTable.Has(TEXT_STYLE_NAME))
-            {
-                tsTable.UpgradeOpen();
-                var textStyle = new TextStyleTableRecord
-                {
-                    FileName = "iso.shx",
-                    Name = TEXT_STYLE_NAME,
-                };
-                textStyleId = tsTable.Add(textStyle);
-                tr.AddNewlyCreatedDBObject(textStyle, true);
-            }
-            else
-            {
-                textStyleId = tsTable[TEXT_STYLE_NAME];
-            }
-
-            tr.Commit();
-            return textStyleId;
+                FileName = "iso.shx",
+                Name = TEXT_STYLE_NAME,
+            };
+            textStyleId = tsTable.Add(textStyle);
+            tr.AddNewlyCreatedDBObject(textStyle, true);
         }
+        else
+        {
+            textStyleId = tsTable[TEXT_STYLE_NAME];
+        }
+
+        tr.Commit();
+        return textStyleId;
     }
 
     public void ClearGraphics()
     {
-        if (_drawables == null)
-            return;
-
         if (_drawables.Count < 0)
             return;
 
@@ -433,9 +418,6 @@ public sealed class TransientGraphics : IDisposable
 
     public void Undo()
     {
-        if (_drawables == null)
-            return;
-
         if (_drawables.Count <= 0)
             return;
 

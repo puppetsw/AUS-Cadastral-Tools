@@ -1,9 +1,10 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Collections.Generic;
 using AUS_Cadastral_Tools.Extensions;
 using AUS_Cadastral_Tools.Helpers;
 using Autodesk.AutoCAD.DatabaseServices;
-using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.Geometry;
 
 namespace AUS_Cadastral_Tools;
@@ -52,7 +53,7 @@ public static class LineUtils
         tr.AddNewlyCreatedDBObject(line, true);
     }
 
-    public static Line Offset(Line originalLine, double offsetDistance, Point3d pickedSide)
+    public static Line? Offset(Line originalLine, double offsetDistance, Point3d pickedSide)
     {
         // Work out direction/angle of originalLine
         var startPoint = originalLine.StartPoint.ToPoint();
@@ -74,7 +75,7 @@ public static class LineUtils
         return pointDbObjectCollection[0] as Line;
     }
 
-    public static Line GetLineOrPolylineSegment(Transaction tr)
+    public static Line? GetLineOrPolylineSegment(Transaction tr)
     {
         if (!EditorUtils.TryGetNestedEntity("\n3DS> Select Line or Polyline segment:", out var firstLineResult))
             return null;
@@ -82,7 +83,7 @@ public static class LineUtils
         if (!firstLineResult.ObjectId.IsType(new[] { typeof(Polyline), typeof(Line) }))
             return null;
 
-        Line line = null;
+        Line? line = null;
 
         if (EditorUtils.IsType(firstLineResult.ObjectId, typeof(Line)))
         {
@@ -97,30 +98,30 @@ public static class LineUtils
             line = new Line(segment.StartPoint.ToPoint3d(), segment.EndPoint.ToPoint3d());
         }
 
-        return line == null ? null : line;
+        return line;
     }
 
-    public static Line GetNearestPointOfLineOrPolylineSegment(Transaction tr, out Point3d endPoint)
+    public static Line? GetNearestPointOfLineOrPolylineSegment(Transaction tr, out Point3d endPoint)
     {
         endPoint = default;
 
-        if (!EditorUtils.TryGetNestedEntity("\n" + ResourceHelpers.GetLocalisedString("ACAD_SelectLineOrPolyline"), out var lineResult))
+        if (!EditorUtils.TryGetNestedEntity("\n" + ResourceHelpers.GetLocalizedString("ACAD_SelectLineOrPolyline"), out var lineResult))
             return null;
 
         if (!lineResult.ObjectId.IsType(new[] { typeof(Polyline), typeof(Line) }))
             return null;
 
-        Line line = null;
+        Line? line = null;
 
         if (lineResult.ObjectId.IsType<Line>())
         {
-            line = tr.GetObject(lineResult.ObjectId, OpenMode.ForRead) as Line;
+            line = (Line)tr.GetObject(lineResult.ObjectId, OpenMode.ForRead);
             endPoint = line.GetClosestEndPoint(lineResult.PickedPoint);
         }
 
         if (lineResult.ObjectId.IsType<Polyline>())
         {
-            var polyline = tr.GetObject(lineResult.ObjectId, OpenMode.ForRead) as Polyline;
+            var polyline = (Polyline)tr.GetObject(lineResult.ObjectId, OpenMode.ForRead);
             line = polyline.GetLineSegmentFromPolyline(lineResult.PickedPoint);
             endPoint = line.GetClosestEndPoint(lineResult.PickedPoint);
         }
