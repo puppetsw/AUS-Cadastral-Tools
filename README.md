@@ -1,2 +1,2 @@
-# AUS-Cadastral-Tools
-A set of tools for cadastral drafting in Autodesk AutoCAD
+# Cadastral Tools
+A set of tools for cadastral drafting for Autodesk AutoCAD
