@@ -156,6 +156,12 @@
   <data name="Links" xml:space="preserve">
     <value>Links</value>
   </data>
+  <data name="LoadingMessage" xml:space="preserve">
+    <value>AUS-Cadastral-Tools v{0} Loaded</value>
+  </data>
+  <data name="LoadingMessageError" xml:space="preserve">
+    <value>AUS-Cadastral-Tools v{0} Not Loaded</value>
+  </data>
   <data name="Metres" xml:space="preserve">
     <value>Metres</value>
   </data>

@@ -42,11 +42,11 @@ public sealed class AcadApp : IExtensionApplication
     {
         try
         {
-            Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("LoadingMessage")} {Assembly.GetExecutingAssembly().GetName().Name}");
+            Editor.WriteMessage($"\n{string.Format(ResourceHelpers.GetLocalizedString("LoadingMessage"), Assembly.GetExecutingAssembly().GetName().Version)}");
         }
         catch (InvalidOperationException e)
         {
-            Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("LoadingMessageError")} {e.Message}");
+            Editor.WriteMessage($"\n{string.Format(ResourceHelpers.GetLocalizedString("LoadingMessageError"), Assembly.GetExecutingAssembly().GetName().Version)}\n{e.Message}");
         }
     }
 

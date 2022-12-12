@@ -178,6 +178,24 @@ namespace AUS_Cadastral_Tools.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AUS-Cadastral-Tools v{0} Loaded.
+        /// </summary>
+        internal static string LoadingMessage {
+            get {
+                return ResourceManager.GetString("LoadingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AUS-Cadastral-Tools v{0} Not Loaded.
+        /// </summary>
+        internal static string LoadingMessageError {
+            get {
+                return ResourceManager.GetString("LoadingMessageError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Metres.
         /// </summary>
         internal static string Metres {
