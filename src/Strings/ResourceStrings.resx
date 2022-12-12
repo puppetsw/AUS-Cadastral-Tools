@@ -213,6 +213,9 @@
   <data name="SpecifyLeftOffsetDistance" xml:space="preserve">
     <value>Specify left offset distance:</value>
   </data>
+  <data name="SpecifyLineOrPolylineSegment" xml:space="preserve">
+    <value>Specify line or polyline segment:</value>
+  </data>
   <data name="SpecifyOffsetDistance" xml:space="preserve">
     <value>Specify offset distance:</value>
   </data>

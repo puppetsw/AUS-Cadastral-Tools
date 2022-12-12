@@ -349,6 +349,15 @@ namespace AUS_Cadastral_Tools.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Specify line or polyline segment:.
+        /// </summary>
+        internal static string SpecifyLineOrPolylineSegment {
+            get {
+                return ResourceManager.GetString("SpecifyLineOrPolylineSegment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Specify offset distance:.
         /// </summary>
         internal static string SpecifyOffsetDistance {

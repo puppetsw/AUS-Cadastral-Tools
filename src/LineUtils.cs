@@ -40,9 +40,7 @@ public static class LineUtils
     public static void DrawLine(Transaction tr, Point3d startPoint, Point3d endPoint)
     {
         if (tr == null)
-        {
             throw new ArgumentNullException(nameof(tr), @"Transaction was null.");
-        }
 
         var blockTable = (BlockTable) tr.GetObject(AcadApp.ActiveDocument.Database.BlockTableId, OpenMode.ForRead);
         var blockTableRecord = (BlockTableRecord) tr.GetObject(blockTable[BlockTableRecord.ModelSpace], OpenMode.ForWrite);
@@ -77,7 +75,7 @@ public static class LineUtils
 
     public static Line? GetLineOrPolylineSegment(Transaction tr)
     {
-        if (!EditorUtils.TryGetNestedEntity("\n3DS> Select Line or Polyline segment:", out var firstLineResult))
+        if (!EditorUtils.TryGetNestedEntity($"\n{ResourceHelpers.GetLocalizedString("SpecifyLineOrPolylineSegment")}", out var firstLineResult))
             return null;
 
         if (!firstLineResult.ObjectId.IsType(new[] { typeof(Polyline), typeof(Line) }))
@@ -105,7 +103,7 @@ public static class LineUtils
     {
         endPoint = default;
 
-        if (!EditorUtils.TryGetNestedEntity("\n" + ResourceHelpers.GetLocalizedString("ACAD_SelectLineOrPolyline"), out var lineResult))
+        if (!EditorUtils.TryGetNestedEntity($"\n{ResourceHelpers.GetLocalizedString("SpecifyLineOrPolylineSegment")}", out var lineResult))
             return null;
 
         if (!lineResult.ObjectId.IsType(new[] { typeof(Polyline), typeof(Line) }))
@@ -152,9 +150,7 @@ public static class LineUtils
         double param = Math.Round(line.GetParameterAtPoint(closetPoint));
 
         if (param < line.Length / 2)
-        {
             return line.StartPoint;
-        }
 
         return line.EndPoint;
     }
