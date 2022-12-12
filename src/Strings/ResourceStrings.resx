@@ -129,6 +129,9 @@
   <data name="DistanceBetweenPoints" xml:space="preserve">
     <value>Distance between points: </value>
   </data>
+  <data name="ErrorCUIFile" xml:space="preserve">
+    <value>Unable to load CUI file</value>
+  </data>
   <data name="Feet" xml:space="preserve">
     <value>Feet</value>
   </data>

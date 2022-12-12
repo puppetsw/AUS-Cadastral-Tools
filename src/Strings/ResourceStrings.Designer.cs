@@ -97,6 +97,15 @@ namespace AUS_Cadastral_Tools.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to load CUI file.
+        /// </summary>
+        internal static string ErrorCUIFile {
+            get {
+                return ResourceManager.GetString("ErrorCUIFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Feet.
         /// </summary>
         internal static string Feet {

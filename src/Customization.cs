@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using AUS_Cadastral_Tools.Helpers;
 using Autodesk.AutoCAD.Customization;
 
 namespace AUS_Cadastral_Tools;
@@ -25,7 +26,7 @@ public static class Customization
 
         if (!File.Exists(filePath))
         {
-            AcadApp.Editor.WriteMessage($"\nCould not find CUI file: {filePath}");
+            AcadApp.Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("ErrorCUIFile")}: {filePath}");
             return;
         }
 
