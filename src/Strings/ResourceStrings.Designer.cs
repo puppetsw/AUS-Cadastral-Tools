@@ -61,6 +61,159 @@ namespace AUS_Cadastral_Tools.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accept Position or:.
+        /// </summary>
+        internal static string AcceptPositionOr {
+            get {
+                return ResourceManager.GetString("AcceptPositionOr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bearing.
+        /// </summary>
+        internal static string Bearing {
+            get {
+                return ResourceManager.GetString("Bearing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distance.
+        /// </summary>
+        internal static string Distance {
+            get {
+                return ResourceManager.GetString("Distance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distance between points: .
+        /// </summary>
+        internal static string DistanceBetweenPoints {
+            get {
+                return ResourceManager.GetString("DistanceBetweenPoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feet.
+        /// </summary>
+        internal static string Feet {
+            get {
+                return ResourceManager.GetString("Feet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flip bearing?.
+        /// </summary>
+        internal static string FlipBearing {
+            get {
+                return ResourceManager.GetString("FlipBearing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First intersection found at X:{0} Y:{1}.
+        /// </summary>
+        internal static string FoundFirstIntersection {
+            get {
+                return ResourceManager.GetString("FoundFirstIntersection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Second intersection found at X:{0} Y:{1}.
+        /// </summary>
+        internal static string FoundSecondIntersection {
+            get {
+                return ResourceManager.GetString("FoundSecondIntersection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inches.
+        /// </summary>
+        internal static string Inches {
+            get {
+                return ResourceManager.GetString("Inches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Intersection found at X:{0} Y:{1}.
+        /// </summary>
+        internal static string IntersectionAtXY {
+            get {
+                return ResourceManager.GetString("IntersectionAtXY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Links.
+        /// </summary>
+        internal static string Links {
+            get {
+                return ResourceManager.GetString("Links", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metres.
+        /// </summary>
+        internal static string Metres {
+            get {
+                return ResourceManager.GetString("Metres", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No intersection point found!.
+        /// </summary>
+        internal static string NoIntersection {
+            get {
+                return ResourceManager.GetString("NoIntersection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick near desired intersection point:.
+        /// </summary>
+        internal static string PickIntersection {
+            get {
+                return ResourceManager.GetString("PickIntersection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select first line to offset:.
+        /// </summary>
+        internal static string SelectFirstOffsetLine {
+            get {
+                return ResourceManager.GetString("SelectFirstOffsetLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select second line to offset:.
+        /// </summary>
+        internal static string SelectSecondOffsetLine {
+            get {
+                return ResourceManager.GetString("SelectSecondOffsetLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slope.
+        /// </summary>
+        internal static string Slope {
+            get {
+                return ResourceManager.GetString("Slope", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Specify base point: .
         /// </summary>
         internal static string SpecifyBasePoint {
@@ -79,11 +232,173 @@ namespace AUS_Cadastral_Tools.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Specify bearing or:.
+        /// </summary>
+        internal static string SpecifyBearingOr {
+            get {
+                return ResourceManager.GetString("SpecifyBearingOr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Specify distance:.
         /// </summary>
         internal static string SpecifyDistance {
             get {
                 return ResourceManager.GetString("SpecifyDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify distance along line:.
+        /// </summary>
+        internal static string SpecifyDistanceAlongLine {
+            get {
+                return ResourceManager.GetString("SpecifyDistanceAlongLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify distance in {0} or:.
+        /// </summary>
+        internal static string SpecifyDistanceInOr {
+            get {
+                return ResourceManager.GetString("SpecifyDistanceInOr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify first bearing:.
+        /// </summary>
+        internal static string SpecifyFirstBearing {
+            get {
+                return ResourceManager.GetString("SpecifyFirstBearing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify first distance:.
+        /// </summary>
+        internal static string SpecifyFirstDistance {
+            get {
+                return ResourceManager.GetString("SpecifyFirstDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify first point:.
+        /// </summary>
+        internal static string SpecifyFirstPoint {
+            get {
+                return ResourceManager.GetString("SpecifyFirstPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify fourth point:.
+        /// </summary>
+        internal static string SpecifyFourthPoint {
+            get {
+                return ResourceManager.GetString("SpecifyFourthPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify inches:.
+        /// </summary>
+        internal static string SpecifyInches {
+            get {
+                return ResourceManager.GetString("SpecifyInches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify left offset distance:.
+        /// </summary>
+        internal static string SpecifyLeftOffsetDistance {
+            get {
+                return ResourceManager.GetString("SpecifyLeftOffsetDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify offset distance:.
+        /// </summary>
+        internal static string SpecifyOffsetDistance {
+            get {
+                return ResourceManager.GetString("SpecifyOffsetDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify point on side to offset:.
+        /// </summary>
+        internal static string SpecifyOffsetSide {
+            get {
+                return ResourceManager.GetString("SpecifyOffsetSide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify right offset distance:.
+        /// </summary>
+        internal static string SpecifyRightOffsetDistance {
+            get {
+                return ResourceManager.GetString("SpecifyRightOffsetDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify second bearing:.
+        /// </summary>
+        internal static string SpecifySecondBearing {
+            get {
+                return ResourceManager.GetString("SpecifySecondBearing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify second distance:.
+        /// </summary>
+        internal static string SpecifySecondDistance {
+            get {
+                return ResourceManager.GetString("SpecifySecondDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify second point:.
+        /// </summary>
+        internal static string SpecifySecondPoint {
+            get {
+                return ResourceManager.GetString("SpecifySecondPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify third point:.
+        /// </summary>
+        internal static string SpecifyThirdPoint {
+            get {
+                return ResourceManager.GetString("SpecifyThirdPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify units:.
+        /// </summary>
+        internal static string SpecifyUnits {
+            get {
+                return ResourceManager.GetString("SpecifyUnits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Units.
+        /// </summary>
+        internal static string Units {
+            get {
+                return ResourceManager.GetString("Units", resourceCulture);
             }
         }
     }

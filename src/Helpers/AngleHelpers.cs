@@ -60,8 +60,11 @@ public static class AngleHelpers
     /// </summary>
     /// <param name="angle">The angle to be flipped.</param>
     /// <returns>A <see cref="Angle"/> containing the flipped values.</returns>
-    public static Angle Flip(this Angle angle)
+    public static Angle Flip(this Angle? angle)
     {
+        if (angle == null)
+            throw new ArgumentNullException(nameof(angle));
+
         return angle - new Angle(180);
     }
 

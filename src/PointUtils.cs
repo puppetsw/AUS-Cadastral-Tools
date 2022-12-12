@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using AUS_Cadastral_Tools.Extensions;
 using AUS_Cadastral_Tools.Helpers;
 using Autodesk.AutoCAD.DatabaseServices;
@@ -28,10 +30,10 @@ public static class PointUtils
         if (dist == null)
             return;
 
-        AcadApp.Editor.WriteMessage($"\n3DS> Bearing: {angle}");
-        AcadApp.Editor.WriteMessage($"\n3DS> Distance: {dist}");
+        AcadApp.Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("Bearing")}: {angle}");
+        AcadApp.Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("Distance")}: {dist}");
 
-        var pko = new PromptKeywordOptions("\n3DS> Flip bearing? ") { AppendKeywordsToMessage = true };
+        var pko = new PromptKeywordOptions($"\n{ResourceHelpers.GetLocalizedString("FlipBearing")}") { AppendKeywordsToMessage = true };
         pko.Keywords.Add(Keywords.ACCEPT);
         pko.Keywords.Add(Keywords.CANCEL);
         pko.Keywords.Add(Keywords.FLIP);
@@ -82,87 +84,6 @@ public static class PointUtils
     }
 
     /// <summary>
-    /// Creates at angle distance and slope.
-    /// </summary>
-    public static void Create_At_Angle_Distance_And_Slope(Action<Transaction, Point3d> createAction)
-    {
-        var graphics = new TransientGraphics();
-        try
-        {
-            if (!EditorUtils.TryGetPoint("\n3DS> Pick starting point: ", out Point3d basePoint))
-                return;
-
-            graphics.DrawX(basePoint, Settings.GraphicsSize);
-
-            if (!EditorUtils.TryGetAngle("\n3DS> Enter angle: ", basePoint, out var angle))
-                return;
-
-            if (!EditorUtils.TryGetDistance("\n3DS> Enter distance: ", basePoint, out var distance))
-                return;
-
-            if (distance == null)
-                return;
-
-            var point = PointHelpers.AngleAndDistanceToPoint(angle, distance.Value, basePoint.ToPoint());
-            graphics.DrawX(point.ToPoint3d(), Settings.GraphicsSize);
-            graphics.DrawLine(basePoint, point.ToPoint3d());
-
-            if (!EditorUtils.TryGetDouble("\n3DS> Enter slope (%): ", out var slope))
-                return;
-
-            if (slope == null)
-                return;
-
-            var newPoint = new Point(point.X, point.Y, basePoint.Z + distance.Value * (slope.Value / 100.0));
-
-            using var tr = AcadApp.StartTransaction();
-            createAction(tr, newPoint.ToPoint3d());
-            tr.Commit();
-        }
-        catch (Exception e)
-        {
-            AcadApp.WriteErrorMessage(e);
-        }
-        finally
-        {
-            graphics.Dispose();
-        }
-    }
-
-    /// <summary>
-    /// Create a point at a picked location with elevation calculated at designated slope.
-    /// </summary>
-    public static void Create_At_Slope_At_Point(Action<Transaction, Point3d> createAction)
-    {
-        using var graphics = new TransientGraphics();
-        using var tr = AcadApp.StartTransaction();
-
-        if (!EditorUtils.TryGetPoint("\n3DS> Base point: ", out Point3d firstPoint))
-            return;
-
-        graphics.DrawPlus(firstPoint, Settings.GraphicsSize);
-
-        if (!EditorUtils.TryGetPoint("\n3DS> New point location: ", out Point3d secondPoint))
-            return;
-
-        graphics.DrawPlus(secondPoint, Settings.GraphicsSize);
-
-        if (!EditorUtils.TryGetDouble("\n3DS> Percent slope: ", out var slope, allowZero: false))
-            return;
-
-        if (slope == null)
-            return;
-
-        double distance = PointHelpers.GetDistanceBetweenPoints(firstPoint.ToPoint(), secondPoint.ToPoint());
-        double elevation = firstPoint.Z + distance * (slope.Value / 100.0);
-        var newPoint = new Point3d(secondPoint.X, secondPoint.Y, elevation);
-
-        createAction(tr, newPoint);
-
-        tr.Commit();
-    }
-
-    /// <summary>
     /// Places a point at the intersection of two bearings defined by four points.
     /// </summary>
     public static void Create_At_Intersection_Of_Four_Points(Action<Transaction, Point3d> createAction)
@@ -170,33 +91,35 @@ public static class PointUtils
         var graphics = new TransientGraphics();
         try
         {
-            if (!EditorUtils.TryGetPoint("\n3DS> Pick the first point: ", out Point3d firstPoint))
+            if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifyFirstPoint")}", out Point3d firstPoint))
                 return;
 
             graphics.DrawPlus(firstPoint, Settings.GraphicsSize);
 
-            if (!EditorUtils.TryGetPoint("\n3DS> Pick the second point: ", out Point3d secondPoint))
+            if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifySecondPoint")}", out Point3d secondPoint))
                 return;
 
             graphics.DrawPlus(secondPoint, Settings.GraphicsSize);
 
-            if (!EditorUtils.TryGetPoint("\n3DS> Pick the third point: ", out Point3d thirdPoint))
+            if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifyThirdPoint")}", out Point3d thirdPoint))
                 return;
 
             graphics.DrawPlus(thirdPoint, Settings.GraphicsSize);
 
-            if (!EditorUtils.TryGetPoint("\n3DS> Pick the fourth point: ", out Point3d fourthPoint))
+            if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifyFourthPoint")}", out Point3d fourthPoint))
                 return;
 
             graphics.DrawPlus(fourthPoint, Settings.GraphicsSize);
+
             graphics.DrawLine(firstPoint, secondPoint);
             graphics.DrawLine(thirdPoint, fourthPoint);
 
-            var canIntersect = PointHelpers.FourPointIntersection(firstPoint.ToPoint(), secondPoint.ToPoint(), thirdPoint.ToPoint(), fourthPoint.ToPoint(), out Point intersectionPoint);
+            var canIntersect = PointHelpers.FourPointIntersection(firstPoint.ToPoint(), secondPoint.ToPoint(),
+                thirdPoint.ToPoint(), fourthPoint.ToPoint(), out Point intersectionPoint);
 
             if (!canIntersect)
             {
-                AcadApp.WriteMessage("No intersection point found!");
+                AcadApp.WriteMessage(ResourceHelpers.GetLocalizedString("NoIntersection"));
                 return;
             }
 
@@ -224,37 +147,43 @@ public static class PointUtils
         var graphics = new TransientGraphics();
         try
         {
-            if (!EditorUtils.TryGetPoint("\n3DS> Pick first point: ", out Point3d firstPoint))
+            if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifyFirstPoint")}", out Point3d firstPoint))
                 return;
 
             graphics.DrawPlus(firstPoint, Settings.GraphicsSize);
 
-            if (!EditorUtils.TryGetAngle("\n3DS> Enter first bearing: ", firstPoint, out var firstAngle))
+            if (!EditorUtils.TryGetAngle($"\n{ResourceHelpers.GetLocalizedString("SpecifyFirstBearing")}", firstPoint, out var firstAngle))
                 return;
 
             var endPoint1 = PointHelpers.AngleAndDistanceToPoint(firstAngle, 1000, firstPoint.ToPoint());
             graphics.DrawLine(firstPoint, endPoint1.ToPoint3d());
 
-            if (!EditorUtils.TryGetPoint("\n3DS> Pick second point: ", out Point3d secondPoint))
+            if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifySecondPoint")}", out Point3d secondPoint))
                 return;
 
             graphics.DrawPlus(secondPoint, Settings.GraphicsSize);
 
-            if (!EditorUtils.TryGetAngle("\n3DS> Enter second bearing: ", secondPoint, out var secondAngle))
+            if (!EditorUtils.TryGetAngle($"\n{ResourceHelpers.GetLocalizedString("SpecifySecondBearing")}", secondPoint, out var secondAngle))
                 return;
 
             var endPoint2 = PointHelpers.AngleAndDistanceToPoint(secondAngle, 1000, secondPoint.ToPoint());
             graphics.DrawLine(secondPoint, endPoint2.ToPoint3d());
 
+            if (firstAngle == null || secondAngle == null)
+                return;
+
             bool canIntersect = PointHelpers.AngleAngleIntersection(firstPoint.ToPoint(), firstAngle, secondPoint.ToPoint(), secondAngle, out var intersectionPoint);
 
             if (!canIntersect)
             {
-                AcadApp.Editor.WriteMessage("\n3DS> No intersection found! ");
+                AcadApp.Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("NoIntersection")}");
                 return;
             }
 
-            AcadApp.Editor.WriteMessage($"\n3DS> Intersection found at X:{Math.Round(intersectionPoint.X, 4)} Y:{Math.Round(intersectionPoint.Y, 4)}");
+            var foundX = Math.Round(intersectionPoint.X, 4);
+            var foundY = Math.Round(intersectionPoint.Y, 4);
+
+            AcadApp.Editor.WriteMessage($"\n{string.Format(ResourceHelpers.GetLocalizedString("IntersectionAtXY"), foundX, foundY)}");
 
             graphics.DrawX(intersectionPoint.ToPoint3d(), Settings.GraphicsSize);
 
@@ -264,7 +193,7 @@ public static class PointUtils
         }
         catch (Exception e)
         {
-            AcadApp.Editor.WriteMessage($"3DS> Command Exception: {e.Message}");
+            AcadApp.Editor.WriteMessage($"\n{e.Message}");
         }
         finally
         {
@@ -280,12 +209,12 @@ public static class PointUtils
         var graphics = new TransientGraphics();
         try
         {
-            if (!EditorUtils.TryGetPoint("\n3DS> Pick first point: ", out Point3d firstPoint))
+            if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifyFirstPoint")}", out Point3d firstPoint))
                 return;
 
             graphics.DrawPlus(firstPoint, Settings.GraphicsSize);
 
-            if (!EditorUtils.TryGetDistance("\n3DS> Enter first distance: ", firstPoint, out var dist1))
+            if (!EditorUtils.TryGetDistance($"\n{ResourceHelpers.GetLocalizedString("SpecifyFirstDistance")}", firstPoint, out var dist1))
                 return;
 
             if (dist1 == null)
@@ -293,12 +222,12 @@ public static class PointUtils
 
             graphics.DrawCircle(firstPoint, dist1.Value);
 
-            if (!EditorUtils.TryGetPoint("\n3DS> Pick second point: ", out Point3d secondPoint))
+            if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifySecondPoint")}", out Point3d secondPoint))
                 return;
 
             graphics.DrawPlus(secondPoint, Settings.GraphicsSize);
 
-            if (!EditorUtils.TryGetDistance("\n3DS> Enter second distance: ", secondPoint, out var dist2))
+            if (!EditorUtils.TryGetDistance($"\n{ResourceHelpers.GetLocalizedString("SpecifySecondDistance")}", secondPoint, out var dist2))
                 return;
 
             if (dist2 == null)
@@ -311,16 +240,23 @@ public static class PointUtils
 
             if (!canIntersect)
             {
-                AcadApp.Editor.WriteMessage("\n3DS> No intersection found! ");
+                AcadApp.Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("NoIntersection")}");
                 return;
             }
 
-            graphics.DrawDot(firstInt.ToPoint3d(), Settings.GraphicsSize/2);
-            graphics.DrawDot(secondInt.ToPoint3d(), Settings.GraphicsSize/2);
-            AcadApp.Editor.WriteMessage($"\n3DS> First intersection found at X:{Math.Round(firstInt.X, 4)} Y:{Math.Round(firstInt.Y, 4)}");
-            AcadApp.Editor.WriteMessage($"\n3DS> Second intersection found at X:{Math.Round(secondInt.X, 4)} Y:{Math.Round(secondInt.Y, 4)}");
+            graphics.DrawDot(firstInt.ToPoint3d(), Settings.GraphicsSize / 2);
+            graphics.DrawDot(secondInt.ToPoint3d(), Settings.GraphicsSize / 2);
 
-            if (!EditorUtils.TryGetPoint("\n3DS> Pick near desired intersection: ", out Point3d pickedPoint))
+            var firstFoundX = Math.Round(firstInt.X, 4);
+            var firstFoundY = Math.Round(firstInt.Y, 4);
+
+            var secondFoundX = Math.Round(secondInt.X, 4);
+            var secondFoundY = Math.Round(secondInt.Y, 4);
+
+            AcadApp.Editor.WriteMessage($"\n{string.Format(ResourceHelpers.GetLocalizedString("FoundFirstIntersection"), firstFoundX, firstFoundY)}");
+            AcadApp.Editor.WriteMessage($"\n{string.Format(ResourceHelpers.GetLocalizedString("FoundSecondIntersection"), secondFoundX, secondFoundY)}");
+
+            if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("PickIntersection")}", out Point3d pickedPoint))
                 return;
 
             using var tr = AcadApp.StartTransaction();
@@ -342,7 +278,7 @@ public static class PointUtils
         }
         catch (Exception e)
         {
-            AcadApp.Editor.WriteMessage($"Command Exception: {e.Message}");
+            AcadApp.Editor.WriteMessage($"\n{e.Message}");
         }
         finally
         {
@@ -359,8 +295,8 @@ public static class PointUtils
         try
         {
             using Transaction tr = AcadApp.StartTransaction();
-            AcadApp.Editor.WriteMessage("\n3DS> Select first line to offset.");
-            Line firstLineToOffset = LineUtils.GetLineOrPolylineSegment(tr);
+            AcadApp.Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("SelectFirstOffsetLine")}");
+            var firstLineToOffset = LineUtils.GetLineOrPolylineSegment(tr);
 
             if (firstLineToOffset == null)
                 return;
@@ -368,8 +304,8 @@ public static class PointUtils
             // Highlight line.
             graphics.DrawLine(firstLineToOffset, TransientDrawingMode.Highlight);
 
-            AcadApp.Editor.WriteMessage("\n3DS> Select second line to offset.");
-            Line secondLineToOffset = LineUtils.GetLineOrPolylineSegment(tr);
+            AcadApp.Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("SelectSecondOffsetLine")}");
+            var secondLineToOffset = LineUtils.GetLineOrPolylineSegment(tr);
 
             if (secondLineToOffset == null)
                 return;
@@ -378,21 +314,29 @@ public static class PointUtils
             graphics.DrawLine(secondLineToOffset, TransientDrawingMode.Highlight);
 
             // Prompt for offset distance.
-            if (!EditorUtils.TryGetDistance("\n" + ResourceHelpers.GetLocalizedString("ACAD_OffsetDistance"), out var dist))
+            if (!EditorUtils.TryGetDistance($"\n{ResourceHelpers.GetLocalizedString("SpecifyOffsetDistance")}", out var dist))
                 return;
 
             if (dist == null)
                 return;
 
             // Pick offset side.
-            if (!EditorUtils.TryGetPoint("\n" + ResourceHelpers.GetLocalizedString("ACAD_PickOffsetSide"), out Point3d offsetPoint))
+            if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifyOffsetSide")}", out Point3d offsetPoint))
                 return;
 
-            Line firstOffsetLine = LineUtils.Offset(firstLineToOffset, dist.Value, offsetPoint);
-            Line secondOffsetLine = LineUtils.Offset(secondLineToOffset, dist.Value, offsetPoint);
+            var firstOffsetLine = LineUtils.Offset(firstLineToOffset, dist.Value, offsetPoint);
+            var secondOffsetLine = LineUtils.Offset(secondLineToOffset, dist.Value, offsetPoint);
+
+            if (firstOffsetLine == null || secondOffsetLine == null)
+                return;
+
             Point intersectionPoint = LineUtils.FindIntersectionPoint(firstOffsetLine, secondOffsetLine);
 
-            var pko = new PromptKeywordOptions("\n" + ResourceHelpers.GetLocalizedString("ACAD_AcceptPosition")) { AppendKeywordsToMessage = true, AllowNone = true };
+            var pko = new PromptKeywordOptions($"\n{ResourceHelpers.GetLocalizedString("AcceptPositionOr")}")
+            {
+                AppendKeywordsToMessage = true,
+                AllowNone = true
+            };
             pko.Keywords.Add(Keywords.ACCEPT);
             pko.Keywords.Add(Keywords.CANCEL);
             pko.Keywords.Default = Keywords.ACCEPT;
@@ -450,44 +394,51 @@ public static class PointUtils
         var graphics = new TransientGraphics();
         try
         {
-            if (!EditorUtils.TryGetPoint("\n3DS> Pick first point: ", out Point3d firstPoint))
+            if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifyFirstPoint")}", out Point3d firstPoint))
                 return;
 
             graphics.DrawPlus(firstPoint, Settings.GraphicsSize);
 
-            if (!EditorUtils.TryGetAngle("\n3DS> Enter angle: ", firstPoint, out var angle1))
+            if (!EditorUtils.TryGetAngle($"\n{ResourceHelpers.GetLocalizedString("SpecifyBearing")}", firstPoint, out var angle))
                 return;
 
-            var constructionPoint = PointHelpers.AngleAndDistanceToPoint(angle1, 32000, firstPoint.ToPoint());
+            var constructionPoint = PointHelpers.AngleAndDistanceToPoint(angle, 32000, firstPoint.ToPoint());
             graphics.DrawLine(firstPoint, constructionPoint.ToPoint3d());
 
-            if (!EditorUtils.TryGetPoint("\n3DS> Pick second point: ", out Point3d secondPoint))
+            if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifySecondPoint")}", out Point3d secondPoint))
                 return;
 
             graphics.DrawPlus(secondPoint, Settings.GraphicsSize);
 
-            if (!EditorUtils.TryGetDistance("\n3DS> Enter distance: ", secondPoint, out var dist))
+            if (!EditorUtils.TryGetDistance($"\n{ResourceHelpers.GetLocalizedString("SpecifyDistance")}", secondPoint, out var dist))
                 return;
 
-            if (dist == null)
+            if (dist == null || angle == null)
                 return;
 
             graphics.DrawCircle(secondPoint, dist.Value);
 
-            var canIntersect = PointHelpers.AngleDistanceIntersection(firstPoint.ToPoint(), angle1, secondPoint.ToPoint(), dist.Value, out Point firstInt, out Point secondInt);
+            var canIntersect = PointHelpers.AngleDistanceIntersection(firstPoint.ToPoint(), angle, secondPoint.ToPoint(), dist.Value, out Point firstInt, out Point secondInt);
 
             if (!canIntersect)
             {
-                AcadApp.Editor.WriteMessage("\n3DS> No intersection found! ");
+                AcadApp.Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("NoIntersection")}");
                 return;
             }
 
-            graphics.DrawDot(firstInt.ToPoint3d(), Settings.GraphicsSize/2);
-            graphics.DrawDot(secondInt.ToPoint3d(), Settings.GraphicsSize/2);
-            AcadApp.Editor.WriteMessage($"\n3DS> First intersection found at X:{Math.Round(firstInt.X, 4)} Y:{Math.Round(firstInt.Y, 4)}");
-            AcadApp.Editor.WriteMessage($"\n3DS> Second intersection found at X:{Math.Round(secondInt.X, 4)} Y:{Math.Round(secondInt.Y, 4)}");
+            graphics.DrawDot(firstInt.ToPoint3d(), Settings.GraphicsSize / 2);
+            graphics.DrawDot(secondInt.ToPoint3d(), Settings.GraphicsSize / 2);
 
-            if (!EditorUtils.TryGetPoint("\n3DS> Pick near desired intersection: ", out Point3d pickedPoint))
+            var firstFoundX = Math.Round(firstInt.X, 4);
+            var firstFoundY = Math.Round(firstInt.Y, 4);
+
+            var secondFoundX = Math.Round(secondInt.X, 4);
+            var secondFoundY = Math.Round(secondInt.Y, 4);
+
+            AcadApp.Editor.WriteMessage($"\n{string.Format(ResourceHelpers.GetLocalizedString("FoundFirstIntersection"), firstFoundX, firstFoundY)}");
+            AcadApp.Editor.WriteMessage($"\n{string.Format(ResourceHelpers.GetLocalizedString("FoundSecondIntersection"), secondFoundX, secondFoundY)}");
+
+            if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("PickIntersection")}", out Point3d pickedPoint))
                 return;
 
             using var tr = AcadApp.StartTransaction();
@@ -509,7 +460,7 @@ public static class PointUtils
         }
         catch (Exception e)
         {
-            AcadApp.Editor.WriteMessage($"3DS> Command Exception: {e.Message}");
+            AcadApp.Editor.WriteMessage($"\n{e.Message}");
         }
         finally
         {
@@ -526,7 +477,7 @@ public static class PointUtils
         using Transaction tr = AcadApp.StartTransaction();
         try
         {
-            Line line = LineUtils.GetNearestPointOfLineOrPolylineSegment(tr, out Point3d basePoint);
+            var line = LineUtils.GetNearestPointOfLineOrPolylineSegment(tr, out Point3d basePoint);
 
             if (line == null)
                 return;
@@ -541,13 +492,17 @@ public static class PointUtils
             if (basePoint == line.StartPoint)
                 angle = angle.Flip();
 
-            if (!EditorUtils.TryGetDistance("\n" + ResourceHelpers.GetLocalizedString("ACAD_OffsetDistance"), basePoint, out var dist))
+            if (!EditorUtils.TryGetDistance($"\n{ResourceHelpers.GetLocalizedString("SpecifyOffsetDistance")}", basePoint, out var dist))
                 return;
 
             if (dist == null)
                 return;
 
-            var pko = new PromptKeywordOptions("\n" + ResourceHelpers.GetLocalizedString("ACAD_AcceptPosition")) { AppendKeywordsToMessage = true, AllowNone = true };
+            var pko = new PromptKeywordOptions($"\n{ResourceHelpers.GetLocalizedString("AcceptPosition")}")
+            {
+                AppendKeywordsToMessage = true,
+                AllowNone = true
+            };
             pko.Keywords.Add(Keywords.ACCEPT);
             pko.Keywords.Add(Keywords.CANCEL);
             pko.Keywords.Add(Keywords.FLIP);
@@ -604,56 +559,6 @@ public static class PointUtils
     }
 
     /// <summary>
-    /// Creates a point at text location.
-    /// </summary>
-    public static void Create_At_Label_Location(Action<Transaction, Point3d> createAction, bool useTextAsElevation = false)
-    {
-        if (!EditorUtils.TryGetSelectionOfType<MText, DBText>("\n3DS> Select text entities: ",
-                "\n3DS> Remove text entities: ", out var selectedTextIds))
-            return;
-
-        using var tr = AcadApp.StartTransaction();
-        foreach (ObjectId objectId in selectedTextIds)
-        {
-            var textEnt = tr.GetObject(objectId, OpenMode.ForRead) as Entity;
-            var textPoint = Point3d.Origin;
-
-            if (textEnt == null)
-                throw new InvalidOperationException("textEnt was null");
-
-            var contents = "";
-
-            var type = textEnt.GetType().ToString();
-
-            switch (type)
-            {
-                case "Autodesk.AutoCAD.DatabaseServices.DBText":
-                    var dbText = textEnt as DBText;
-                    if (dbText == null)
-                        throw new InvalidOperationException("dbText was null.");
-                    contents = dbText.TextString;
-                    textPoint = dbText.Position;
-                    break;
-                case "Autodesk.AutoCAD.DatabaseServices.MText":
-                    var mText = textEnt as MText;
-                    if (mText == null)
-                        throw new InvalidOperationException("mText was null.");
-                    contents = mText.Contents;
-                    textPoint = mText.Location;
-                    break;
-            }
-
-            double elevText = StringHelpers.ExtractDoubleFromString(contents);
-
-            var point = useTextAsElevation ? new(textPoint.X, textPoint.Y, elevText) :
-                new Point3d(textPoint.X, textPoint.Y, textPoint.Z);
-
-            createAction(tr, point);
-        }
-        tr.Commit();
-    }
-
-    /// <summary>
     /// Creates points at an offset between points.
     /// </summary>
     public static void Create_At_Offset_Between_Points(Action<Transaction, Point3d> createAction)
@@ -661,12 +566,12 @@ public static class PointUtils
         var graphics = new TransientGraphics();
         try
         {
-            if (!EditorUtils.TryGetPoint("\n3DS> Pick first point: ", out Point3d firstPoint))
+            if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifyFirstPoint")}", out Point3d firstPoint))
                 return;
 
             graphics.DrawX(firstPoint, Settings.GraphicsSize);
 
-            if (!EditorUtils.TryGetPoint("\n3DS> Pick second point: ", out Point3d secondPoint))
+            if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifySecondPoint")}", out Point3d secondPoint))
                 return;
 
             graphics.DrawX(secondPoint, Settings.GraphicsSize);
@@ -678,7 +583,7 @@ public static class PointUtils
             {
                 using var tr = AcadApp.StartTransaction();
 
-                if (!EditorUtils.TryGetDistance("\n3DS> Enter distance along line: ", firstPoint, out var horizontalDist))
+                if (!EditorUtils.TryGetDistance($"\n{ResourceHelpers.GetLocalizedString("SpecifyDistanceAlongLine")}", firstPoint, out var horizontalDist))
                     break;
 
                 if (horizontalDist == null)
@@ -686,7 +591,7 @@ public static class PointUtils
 
                 var basePoint = PointHelpers.AngleAndDistanceToPoint(baseLine, horizontalDist.Value, firstPoint.ToPoint());
 
-                if (!EditorUtils.TryGetDistance("\n3DS> Enter left offset: ", basePoint.ToPoint3d(), out var leftOffsetDist))
+                if (!EditorUtils.TryGetDistance($"\n{ResourceHelpers.GetLocalizedString("SpecifyLeftOffsetDistance")}", basePoint.ToPoint3d(), out var leftOffsetDist))
                     break;
 
                 if (leftOffsetDist == null)
@@ -696,7 +601,7 @@ public static class PointUtils
                 graphics.DrawDot(leftOffsetPt.ToPoint3d(), Settings.GraphicsSize);
                 createAction(tr, leftOffsetPt.ToPoint3d());
 
-                if (!EditorUtils.TryGetDistance("\n3DS> Enter right offset: ", basePoint.ToPoint3d(), out var rightOffsetDist))
+                if (!EditorUtils.TryGetDistance($"\n{ResourceHelpers.GetLocalizedString("SpecifyRightOffsetDistance")}", basePoint.ToPoint3d(), out var rightOffsetDist))
                     break;
 
                 if (rightOffsetDist == null)
@@ -740,12 +645,12 @@ public static class PointUtils
         using var graphics = new TransientGraphics();
         using var tr = AcadApp.StartTransaction();
 
-        if (!EditorUtils.TryGetPoint("\n3DS> First point: ", out Point3d firstPoint))
+        if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifyFirstPoint")}", out Point3d firstPoint))
             return;
 
         graphics.DrawPlus(firstPoint, Settings.GraphicsSize);
 
-        if (!EditorUtils.TryGetPoint("\n3DS> Second point: ", out Point3d secondPoint))
+        if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifySecondPoint")}", out Point3d secondPoint))
             return;
 
         var deltaZ = secondPoint.Z - firstPoint.Z;
@@ -757,11 +662,11 @@ public static class PointUtils
         graphics.DrawLine(firstPoint, secondPoint);
         graphics.DrawArrow(midPoint.ToPoint3d(), angle, Settings.GraphicsSize);
 
-        AcadApp.Editor.WriteMessage($"\n3DS> Total distance: {Math.Round(distBetween, 3)}");
+        AcadApp.Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("DistanceBetweenPoints")} {Math.Round(distBetween, SystemVariables.LUPREC)}");
 
         do
         {
-            if (!EditorUtils.TryGetDouble("\n3DS> Enter distance: ", out var distance, allowZero: false))
+            if (!EditorUtils.TryGetDouble($"\n{ResourceHelpers.GetLocalizedString("SpecifyDistance")}", out var distance, allowZero: false))
                 break;
 
             if (distance == null)
@@ -787,12 +692,12 @@ public static class PointUtils
         var graphics = new TransientGraphics();
         try
         {
-            if (!EditorUtils.TryGetPoint("\n3DS> Pick first point: ", out Point3d firstPoint))
+            if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifyFirstPoint")}", out Point3d firstPoint))
                 return;
 
             graphics.DrawPlus(firstPoint, Settings.GraphicsSize);
 
-            if (!EditorUtils.TryGetPoint("\n3DS> Pick second point: ", out Point3d secondPoint))
+            if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifySecondPoint")}", out Point3d secondPoint))
                 return;
 
             graphics.DrawPlus(secondPoint, Settings.GraphicsSize);
@@ -811,14 +716,14 @@ public static class PointUtils
             {
                 //TODO: Implement way to show point moving along line relative to mouse position for point creation.
                 /*
-                    Having brain wave moment. Can use methods like intersect 2 bearings to calculate point
-                    on the line relative to the mouse position. if we take the line and add 90°? depending
+                    Can use methods like intersect 2 bearings to calculate point on the line
+                    relative to the mouse position. if we take the line and add 90°? depending
                     on which side of the line the mouse is. we can use the IsLeft() method.
                     need to pass in new graphics object so we can clear it each move.
                     write own event and handler. to pass points etc.
-                    */
+                */
 
-                if (!EditorUtils.TryGetDistance("\n3DS> Enter distance: ", firstPoint, out var distance))
+                if (!EditorUtils.TryGetDistance($"\n{ResourceHelpers.GetLocalizedString("SpecifyDistance")}", firstPoint, out var distance))
                     cancelled = true;
 
                 if (distance == null)
@@ -836,7 +741,7 @@ public static class PointUtils
         }
         catch (Exception e)
         {
-            AcadApp.Editor.WriteMessage($"3DS> Command Exception: {e.Message}");
+            AcadApp.Editor.WriteMessage($"\n{e.Message}");
         }
         finally
         {
@@ -853,10 +758,10 @@ public static class PointUtils
         var delta = MathHelpers.DeltaPoint(firstPoint.ToPoint(), secondPoint.ToPoint(), decimalPlaces);
         var slope = Math.Round(Math.Abs(delta.Z / distance * 100), decimalPlaces);
 
-        AcadApp.Editor.WriteMessage($"\n3DS> Angle: {angle} ({angle.Flip()})");
-        AcadApp.Editor.WriteMessage($"\n3DS> Distance: {distance}");
-        AcadApp.Editor.WriteMessage($"\n3DS> dX:{delta.X} dY:{delta.Y} dZ:{delta.Z}");
-        AcadApp.Editor.WriteMessage($"\n3DS> Slope:{slope}%");
+        AcadApp.Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("Bearing")}: {angle} ({angle.Flip()})");
+        AcadApp.Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("Distance")}: {distance}");
+        AcadApp.Editor.WriteMessage($"\ndX:{delta.X} dY:{delta.Y} dZ:{delta.Z}");
+        AcadApp.Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("Slope")}:{slope}%");
     }
 
 
@@ -870,14 +775,14 @@ public static class PointUtils
         try
         {
             // Pick first point.
-            if (!EditorUtils.TryGetPoint("\n3DS> Pick first point: ", out Point3d firstPoint))
+            if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifyFirstPoint")}", out Point3d firstPoint))
                 return;
 
             // Highlight first point.
             graphics.DrawX(firstPoint, Settings.GraphicsSize);
 
             // Pick second point.
-            if (!EditorUtils.TryGetPoint("\n3DS> Pick second point: ", out Point3d secondPoint))
+            if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifySecondPoint")}", out Point3d secondPoint))
                 return;
 
             Inverse(firstPoint, secondPoint);
@@ -902,7 +807,7 @@ public static class PointUtils
         {
             while (true)
             {
-                bool loopPick = EditorUtils.TryGetPoint("\n3DS> Pick first point: ", out Point3d firstPoint);
+                bool loopPick = EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifyFirstPoint")}", out Point3d firstPoint);
 
                 if (!loopPick)
                     break;
@@ -911,7 +816,7 @@ public static class PointUtils
                 graphics.DrawX(firstPoint, Settings.GraphicsSize);
 
                 // Pick second point.
-                if (!EditorUtils.TryGetPoint("\n3DS> Pick second point: ", out Point3d secondPoint))
+                if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifySecondPoint")}", out Point3d secondPoint))
                     return;
 
                 var decimalPlaces = SystemVariables.LUPREC;
@@ -926,7 +831,7 @@ public static class PointUtils
                 graphics.DrawX(firstPoint, Settings.GraphicsSize);
                 graphics.DrawX(secondPoint, Settings.GraphicsSize);
                 graphics.DrawLine(firstPoint, secondPoint);
-                graphics.DrawText(midPoint.ToPoint3d(), $"bearing: {angle} \\P dist: {distance} \\P dX:{delta.X} dY:{delta.Y} dZ:{delta.Z} \\P Slope:{slope}%", 1.0, angle.GetOrdinaryAngle());
+                graphics.DrawText(midPoint.ToPoint3d(), $"{ResourceHelpers.GetLocalizedString("Bearing").ToLower()}: {angle} \\P {ResourceHelpers.GetLocalizedString("Distance").ToLower()}: {distance} \\P dX:{delta.X} dY:{delta.Y} dZ:{delta.Z} \\P {ResourceHelpers.GetLocalizedString("Slope")}:{slope}%", 1.0, angle.GetOrdinaryAngle());
             }
         }
         catch (Exception e)
@@ -947,12 +852,12 @@ public static class PointUtils
         var graphics = new TransientGraphics();
         try
         {
-            if (!EditorUtils.TryGetPoint("\n3DS> Pick first point: ", out Point3d firstPoint))
+            if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifyFirstPoint")}", out Point3d firstPoint))
                 return;
 
             graphics.DrawPlus(firstPoint, Settings.GraphicsSize);
 
-            if (!EditorUtils.TryGetPoint("\n3DS> Pick second point: ", out Point3d secondPoint))
+            if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifySecondPoint")}", out Point3d secondPoint))
                 return;
 
             graphics.DrawPlus(secondPoint, Settings.GraphicsSize);
@@ -960,14 +865,14 @@ public static class PointUtils
 
             do
             {
-                if (!EditorUtils.TryGetPoint("\n3DS> Pick offset point: ", out Point3d pickedPoint))
+                if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifyOffsetSide")}", out Point3d pickedPoint))
                     break;
 
                 var canIntersect = PointHelpers.PerpendicularIntersection(firstPoint.ToPoint(), secondPoint.ToPoint(), pickedPoint.ToPoint(), out Point intersectionPoint);
 
                 if (!canIntersect)
                 {
-                    AcadApp.Editor.WriteMessage("\n3DS> No intersection found. ");
+                    AcadApp.Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("NoIntersection")}");
                     continue;
                 }
 
@@ -980,10 +885,10 @@ public static class PointUtils
 
                 var midPt = PointHelpers.GetMidpointBetweenPoints(pickedPoint.ToPoint(), intersectionPoint);
 
-                graphics.DrawText(midPt.ToPoint3d(), $"bearing: {angle} \\P dist: {distance}", 1, angle);
+                graphics.DrawText(midPt.ToPoint3d(), $"{ResourceHelpers.GetLocalizedString("Bearing")}: {angle} \\P {ResourceHelpers.GetLocalizedString("Distance")}: {distance}", 1, angle);
 
-                AcadApp.Editor.WriteMessage($"\n3DS> Angle: {angle}");
-                AcadApp.Editor.WriteMessage($"\n3DS> Distance: {distance}");
+                AcadApp.Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("Bearing")}: {angle}");
+                AcadApp.Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("Distance")}: {distance}");
 
             } while (true);
         }
@@ -997,13 +902,12 @@ public static class PointUtils
         }
     }
 
-
     /// <summary>
     /// Creates a <see cref="DBPoint"/> at the specified location.
     /// </summary>
     /// <param name="tr">The existing transaction.</param>
     /// <param name="position">The position to create the point at.</param>
-    /// <remarks>Don't forget to Commit(); the transaction after using.</remarks>
+    /// <remarks>Don't forget to Commit() the transaction.</remarks>
     public static void CreatePoint(Transaction tr, Point3d position)
     {
         // Open the Block table for read
@@ -1026,7 +930,6 @@ public static class PointUtils
         tr.AddNewlyCreatedDBObject(acPoint, true);
 
         // Save the new object to the database
-        // Don't commit, leave it up to the calling method.
+        // Don't commit transaction. Leave it up to the calling method.
     }
-
 }

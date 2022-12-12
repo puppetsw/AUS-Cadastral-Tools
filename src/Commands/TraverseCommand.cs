@@ -1,5 +1,6 @@
-﻿using System;
-using System.Diagnostics;
+﻿#nullable enable
+
+using System;
 using AUS_Cadastral_Tools.Extensions;
 using AUS_Cadastral_Tools.Helpers;
 using Autodesk.AutoCAD.EditorInput;
@@ -175,7 +176,9 @@ public class TraverseCommand : IAcadCommand
                     pko.Keywords.Add(Keywords.FLIP);
                     pko.Keywords.Default = Keywords.ACCEPT;
 
-                    Debug.Assert(distance != null);
+                    if (distance is null)
+                        return;
+
                     Point newPoint = PointHelpers.AngleAndDistanceToPoint(bearing, distance.Value, basePoint.ToPoint());
 
                     graphics.DrawLine(basePoint.ToPoint2d(), newPoint.ToPoint2d());

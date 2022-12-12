@@ -117,13 +117,118 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AcceptPositionOr" xml:space="preserve">
+    <value>Accept Position or:</value>
+  </data>
+  <data name="Bearing" xml:space="preserve">
+    <value>Bearing</value>
+  </data>
+  <data name="Distance" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="DistanceBetweenPoints" xml:space="preserve">
+    <value>Distance between points: </value>
+  </data>
+  <data name="Feet" xml:space="preserve">
+    <value>Feet</value>
+  </data>
+  <data name="FlipBearing" xml:space="preserve">
+    <value>Flip bearing?</value>
+  </data>
+  <data name="FoundFirstIntersection" xml:space="preserve">
+    <value>First intersection found at X:{0} Y:{1}</value>
+  </data>
+  <data name="FoundSecondIntersection" xml:space="preserve">
+    <value>Second intersection found at X:{0} Y:{1}</value>
+  </data>
+  <data name="Inches" xml:space="preserve">
+    <value>Inches</value>
+  </data>
+  <data name="IntersectionAtXY" xml:space="preserve">
+    <value>Intersection found at X:{0} Y:{1}</value>
+  </data>
+  <data name="Links" xml:space="preserve">
+    <value>Links</value>
+  </data>
+  <data name="Metres" xml:space="preserve">
+    <value>Metres</value>
+  </data>
+  <data name="NoIntersection" xml:space="preserve">
+    <value>No intersection point found!</value>
+  </data>
+  <data name="PickIntersection" xml:space="preserve">
+    <value>Pick near desired intersection point:</value>
+  </data>
+  <data name="SelectFirstOffsetLine" xml:space="preserve">
+    <value>Select first line to offset:</value>
+  </data>
+  <data name="SelectSecondOffsetLine" xml:space="preserve">
+    <value>Select second line to offset:</value>
+  </data>
+  <data name="Slope" xml:space="preserve">
+    <value>Slope</value>
+  </data>
   <data name="SpecifyBasePoint" xml:space="preserve">
     <value>Specify base point: </value>
   </data>
   <data name="SpecifyBearing" xml:space="preserve">
     <value>Specify bearing:</value>
   </data>
+  <data name="SpecifyBearingOr" xml:space="preserve">
+    <value>Specify bearing or:</value>
+  </data>
   <data name="SpecifyDistance" xml:space="preserve">
     <value>Specify distance:</value>
+  </data>
+  <data name="SpecifyDistanceAlongLine" xml:space="preserve">
+    <value>Specify distance along line:</value>
+  </data>
+  <data name="SpecifyDistanceInOr" xml:space="preserve">
+    <value>Specify distance in {0} or:</value>
+  </data>
+  <data name="SpecifyFirstBearing" xml:space="preserve">
+    <value>Specify first bearing:</value>
+  </data>
+  <data name="SpecifyFirstDistance" xml:space="preserve">
+    <value>Specify first distance:</value>
+  </data>
+  <data name="SpecifyFirstPoint" xml:space="preserve">
+    <value>Specify first point:</value>
+  </data>
+  <data name="SpecifyFourthPoint" xml:space="preserve">
+    <value>Specify fourth point:</value>
+  </data>
+  <data name="SpecifyInches" xml:space="preserve">
+    <value>Specify inches:</value>
+  </data>
+  <data name="SpecifyLeftOffsetDistance" xml:space="preserve">
+    <value>Specify left offset distance:</value>
+  </data>
+  <data name="SpecifyOffsetDistance" xml:space="preserve">
+    <value>Specify offset distance:</value>
+  </data>
+  <data name="SpecifyOffsetSide" xml:space="preserve">
+    <value>Specify point on side to offset:</value>
+  </data>
+  <data name="SpecifyRightOffsetDistance" xml:space="preserve">
+    <value>Specify right offset distance:</value>
+  </data>
+  <data name="SpecifySecondBearing" xml:space="preserve">
+    <value>Specify second bearing:</value>
+  </data>
+  <data name="SpecifySecondDistance" xml:space="preserve">
+    <value>Specify second distance:</value>
+  </data>
+  <data name="SpecifySecondPoint" xml:space="preserve">
+    <value>Specify second point:</value>
+  </data>
+  <data name="SpecifyThirdPoint" xml:space="preserve">
+    <value>Specify third point:</value>
+  </data>
+  <data name="SpecifyUnits" xml:space="preserve">
+    <value>Specify units:</value>
+  </data>
+  <data name="Units" xml:space="preserve">
+    <value>Units</value>
   </data>
 </root>

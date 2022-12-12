@@ -15,6 +15,7 @@ namespace AUS_Cadastral_Tools;
 /// Provides access to several "active" objects and helper methods
 /// in the AutoCAD runtime environment.
 /// </summary>
+// ReSharper disable once ClassNeverInstantiated.Global
 public sealed class AcadApp : IExtensionApplication
 {
     /// <summary>
@@ -41,11 +42,11 @@ public sealed class AcadApp : IExtensionApplication
     {
         try
         {
-            Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("ACAD_Loading")} {Assembly.GetExecutingAssembly().GetName().Name}");
+            Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("LoadingMessage")} {Assembly.GetExecutingAssembly().GetName().Name}");
         }
         catch (InvalidOperationException e)
         {
-            Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("ACAD_LoadingError")} {e.Message}");
+            Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("LoadingMessageError")} {e.Message}");
         }
     }
 
