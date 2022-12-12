@@ -45,7 +45,7 @@ public static class EditorUtils
                 if (pdoResult.StringResult != Keywords.PICK)
                     break;
 
-                if (TryPickAngle("\n3DS> Pick bearing on screen: ", basePoint, out angle))
+                if (TryPickAngle($"\n{ResourceHelpers.GetLocalizedString("SpecifyBearingOnScreen")}", basePoint, out angle))
                     break;
             }
             else if (pdoResult.Status == PromptStatus.OK)
@@ -375,7 +375,7 @@ public static class EditorUtils
     public static bool TryGetEntityOfType<T>(string addMessage, bool exactMatch, string[]? keywords, string defaultKeyword, out string selectedKeyword, out ObjectId objectId)
     {
         var peo = new PromptEntityOptions(addMessage);
-        peo.SetRejectMessage("\n3DS> Invalid entity type.");
+        peo.SetRejectMessage($"\n{ResourceHelpers.GetLocalizedString("InvalidEntity")}");
         selectedKeyword = string.Empty;
 
         if (keywords != null)

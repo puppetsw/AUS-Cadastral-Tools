@@ -150,6 +150,9 @@
   <data name="IntersectionAtXY" xml:space="preserve">
     <value>Intersection found at X:{0} Y:{1}</value>
   </data>
+  <data name="InvalidEntity" xml:space="preserve">
+    <value>Invalid entity type</value>
+  </data>
   <data name="Links" xml:space="preserve">
     <value>Links</value>
   </data>
@@ -176,6 +179,9 @@
   </data>
   <data name="SpecifyBearing" xml:space="preserve">
     <value>Specify bearing:</value>
+  </data>
+  <data name="SpecifyBearingOnScreen" xml:space="preserve">
+    <value>Specify bearing on screen:</value>
   </data>
   <data name="SpecifyBearingOr" xml:space="preserve">
     <value>Specify bearing or:</value>

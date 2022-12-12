@@ -160,6 +160,15 @@ namespace AUS_Cadastral_Tools.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid entity type.
+        /// </summary>
+        internal static string InvalidEntity {
+            get {
+                return ResourceManager.GetString("InvalidEntity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Links.
         /// </summary>
         internal static string Links {
@@ -237,6 +246,15 @@ namespace AUS_Cadastral_Tools.Strings {
         internal static string SpecifyBearing {
             get {
                 return ResourceManager.GetString("SpecifyBearing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify bearing on screen:.
+        /// </summary>
+        internal static string SpecifyBearingOnScreen {
+            get {
+                return ResourceManager.GetString("SpecifyBearingOnScreen", resourceCulture);
             }
         }
         
