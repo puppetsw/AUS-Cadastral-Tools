@@ -90,7 +90,6 @@
     <Compile Include="EditorUtils.cs" />
     <Compile Include="Extensions\PointExtensions.cs" />
     <Compile Include="Helpers\ResourceHelpers.cs" />
-    <Compile Include="Helpers\StringHelpers.cs" />
     <Compile Include="Keywords.cs" />
     <Compile Include="LineTypeUtils.cs" />
     <Compile Include="LineUtils.cs" />
