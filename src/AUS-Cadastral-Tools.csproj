@@ -84,6 +84,14 @@
     <Compile Include="AcadApp.cs" />
     <Compile Include="AcadCommands.cs" />
     <Compile Include="Angle.cs" />
+    <Compile Include="Graphics\TransientArrow.cs" />
+    <Compile Include="Graphics\TransientChainage.cs" />
+    <Compile Include="Graphics\TransientCircle.cs" />
+    <Compile Include="Graphics\TransientCross.cs" />
+    <Compile Include="Graphics\TransientDot.cs" />
+    <Compile Include="Graphics\TransientLine.cs" />
+    <Compile Include="Graphics\TransientPlus.cs" />
+    <Compile Include="Graphics\TransientText.cs" />
     <Compile Include="Helpers\AngleHelpers.cs" />
     <Compile Include="Commands\IAcadCommand.cs" />
     <Compile Include="Commands\TraverseCommand.cs" />
@@ -114,7 +122,7 @@
       <DependentUpon>ResourceStrings.resx</DependentUpon>
     </Compile>
     <Compile Include="SystemVariables.cs" />
-    <Compile Include="TransientDrawable.cs" />
+    <Compile Include="Graphics\TransientDrawableBase.cs" />
     <Compile Include="TransientGraphics.cs" />
     <Compile Include="Vector.cs" />
   </ItemGroup>

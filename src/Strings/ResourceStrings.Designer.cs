@@ -61,6 +61,15 @@ namespace AUS_Cadastral_Tools.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accept and continue?.
+        /// </summary>
+        internal static string AcceptAndContinue {
+            get {
+                return ResourceManager.GetString("AcceptAndContinue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accept Position or:.
         /// </summary>
         internal static string AcceptPositionOr {
