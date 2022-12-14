@@ -844,14 +844,24 @@ public static class PointUtils
         }
     }
 
+
+
     /// <summary>
     /// Inverses the perpendicular.
     /// </summary>
     public static void Inverse_Pick_Perpendicular()
     {
         var graphics = new TransientGraphics();
+
+        void OnActiveDocumentOnViewChanged(object sender, EventArgs args)
+        {
+            graphics.Redraw();
+        }
+
         try
         {
+            AcadApp.ActiveDocument.ViewChanged += OnActiveDocumentOnViewChanged;
+
             if (!EditorUtils.TryGetPoint($"\n{ResourceHelpers.GetLocalizedString("SpecifyFirstPoint")}", out Point3d firstPoint))
                 return;
 
@@ -898,6 +908,7 @@ public static class PointUtils
         }
         finally
         {
+            AcadApp.ActiveDocument.ViewChanged -= OnActiveDocumentOnViewChanged;
             graphics.Dispose();
         }
     }
