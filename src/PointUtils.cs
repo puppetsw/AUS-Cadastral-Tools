@@ -895,7 +895,7 @@ public static class PointUtils
 
                 var midPt = PointHelpers.GetMidpointBetweenPoints(pickedPoint.ToPoint(), intersectionPoint);
 
-                graphics.DrawText(midPt.ToPoint3d(), $"{ResourceHelpers.GetLocalizedString("Bearing")}: {angle} \\P {ResourceHelpers.GetLocalizedString("Distance")}: {distance}", 1, angle);
+                graphics.DrawText(midPt.ToPoint3d(), $"{ResourceHelpers.GetLocalizedString("Bearing")}: {angle} \\P {ResourceHelpers.GetLocalizedString("Distance")}: {distance}", 2, angle);
 
                 AcadApp.Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("Bearing")}: {angle}");
                 AcadApp.Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("Distance")}: {distance}");
