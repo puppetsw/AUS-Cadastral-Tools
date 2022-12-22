@@ -75,43 +75,12 @@ public static class PointHelpers
     /// <param name="angle2">The angle2.</param>
     /// <param name="intersectionPoint"></param>
     /// <returns>A <see cref="Point"/> representing the intersection of two <see cref="Angle"/> objects.</returns>
-    /// <remarks>
-    /// Seems to be a rounding issue that I've yet to fix.
-    /// Might be an issue with AutoCAD internal. Math confirms with
-    /// other online calculations.
-    /// </remarks>
-    public static bool AngleAngleIntersection(Point point1, Angle angle1, Point point2, Angle angle2, out Point intersectionPoint)
+    public static bool AngleAngleIntersection(Point point1, Angle angle1, Point point2, Angle angle2, out Point? intersectionPoint)
     {
-        intersectionPoint = Point.Origin;
-        var inverseAng = AngleHelpers.GetAngleBetweenPoints(point1, point2);
-        var inverseDist = GetDistanceBetweenPoints(point1, point2);
+        var projectedPoint1 = AngleAndDistanceToPoint(angle1, 1000, point1);
+        var projectedPoint2 = AngleAndDistanceToPoint(angle2, 1000, point2);
 
-        Angle internalA = angle1 - inverseAng;
-
-        if (internalA.Degrees > 180 && internalA.Minutes >= 0 && internalA.Seconds >= 0)
-            internalA = new Angle(360) - internalA;
-
-        Angle internalB = angle2 - inverseAng.Flip();
-
-        if (internalB.Degrees > 180 && internalB.Minutes >= 0 && internalB.Seconds >= 0)
-            internalB = new Angle(360) - internalB;
-
-        // Calculate remaining internal angle.
-        Angle internalC = new Angle(180) - internalA - internalB;
-
-        // If the internal angle is greater than or equal to 180°
-        // Just thought that if the minutes or seconds are greater
-        // It's still going to think it's okay.
-        if (internalC.Degrees >= 180 && internalC.Minutes >= 0 && internalC.Seconds >= 0)
-            return false;
-
-        var radA = internalA.ToRadians();
-        var radB = internalC.ToRadians();
-
-        var dist1 = Math.Sin(radA) * inverseDist / Math.Sin(radB);
-
-        intersectionPoint = AngleAndDistanceToPoint(angle2, dist1, point2);
-        return true;
+        return FourPointIntersection(point1, projectedPoint1, point2, projectedPoint2, out intersectionPoint);
     }
 
     /// <summary>

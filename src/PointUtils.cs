@@ -172,9 +172,10 @@ public static class PointUtils
             if (firstAngle == null || secondAngle == null)
                 return;
 
+            // BUG: intersection is reversed when bearings go away from each other.
             bool canIntersect = PointHelpers.AngleAngleIntersection(firstPoint.ToPoint(), firstAngle, secondPoint.ToPoint(), secondAngle, out var intersectionPoint);
 
-            if (!canIntersect)
+            if (!canIntersect || intersectionPoint is null)
             {
                 AcadApp.Editor.WriteMessage($"\n{ResourceHelpers.GetLocalizedString("NoIntersection")}");
                 return;
