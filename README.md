@@ -1,8 +1,38 @@
 # Cadastral Tools
 
-Cadastral Tools is a set of tools/commands for cadastral drafting in Autodesk AutoCAD.
+![.NET Framework](https://img.shields.io/badge/.NET%20Framework-4.6.1-blue)
+![AutoCAD](https://img.shields.io/badge/AutoCAD-2022-red)
+![Platforms](https://img.shields.io/badge/Plugins-Windows-lightgray.svg)
+[![License](http://img.shields.io/:license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-## Building from source
+# Description
+
+Cadastral Tools is a set of tools/commands for cadastral drafting in Autodesk AutoCAD. This plugin contains commands to help with point creation and common measurement practices with cadastral surveying.
+
+`.NET Framework 4.6.1` is used to be compatiable with earlier versions of AutoCAD. Release 21.0 to current.
+
+# Commands
+* `InverseCL` to display inverse information between two points in the command window. 
+* `InverseOS` to display similar information as the `InverseCL` command but displays on the screen using transient graphics.
+* `InverseCHOS` to display inverse information along a baseline specified by two points at perpendicular offsets.
+* `PtDistanceOnline` to create points on a baseline between two specified points. 
+* `PtIntFourPts` to create a point at the intersection of four points.
+* `PtBetweenPts` to create a point between two specified points.
+* `PtOffsetBetweenPts` to create a point between two specified points at an offset from the baseline.
+* `PtIntAngleDistance` to create a point at the intersection of a bearing and a distance.
+* `PtIntDistances` to create a point at the intersection of two distances.
+* `PtIntAngles` to create a point at the intersection of two bearings.
+* `PtAngleDistance` to create a point at a bearing and distance.
+* `PtOffsetLine` to create a point at an offset from a found intersection.
+* `PtProdOfLineDist` to create a point on the production of a line at a specified distance.
+
+## Screenshots
+
+Example of INVERSECHOS command.
+
+![recordingexample1](https://user-images.githubusercontent.com/79826944/209060657-dab86d82-03af-47b7-9838-ec5d6f2bba45.gif)
+
+## Building the source
 
 ### 1. Prerequisites
 
@@ -10,13 +40,11 @@ Cadastral Tools is a set of tools/commands for cadastral drafting in Autodesk Au
 - .NET Framework 4.6.1
 - Git for Windows
     
-### 2. Clone the repository
+### 2. Cloning the repository
 
 ```
 git clone https://github.com/puppetsw/AUS-Cadastral-Tools
 ```
-
-This will create a local copy of the repository.
 
 ### 3. Running the project
 
@@ -38,26 +66,7 @@ Click the `Debug` tab and modify the `Start external program` path to match your
 
 Feel free to contribute in anyway you see fit.
 
-## Screenshots
+## License
 
-Example of INVERSECHOS command.
-
-![recordingexample1](https://user-images.githubusercontent.com/79826944/209060657-dab86d82-03af-47b7-9838-ec5d6f2bba45.gif)
-
-## List of avaliable commands
-| Command Name | Description |
-| ------------------------ | --------------------------------- |
-| INVERSECL | Displays inverse information between two points in the command window. Displays bearing, distance, delta X, delta Y, delta Z and slope % values. |
-| INVERSEOS | Displays same information as the INVERSECL command but displays on the screen using transient graphics. |
-| INVERSECHOS | Displays inverse information along a base line specified by two points at perpendicular offsets. |
-| PTDISTANCEONLINE | Create points on a base line between two specified points. New points are created using a typed distance. Elevation is interploated using the Z value of the specified points. |
-| PTINTFOURPTS | Creates a point at the intersection of four points. |
-| PTBETWEENPTS | Creates a point between two specified points. |
-| PTOFFSETBETWEENPTS | Creates a point between two specified points at an offset from the base line. |
-| PTINTANGLEDISTANCE | Creates a point at the intersection of a bearing and a distance. User can pick which intersection point to use from the two possible calculations. |
-| PTINTDISTANCES | Creates a point at the intersection of two distances. User can pick which intersection point to use from the two possible calculations. |
-| PTINTANGLES | Creates a point at the intersection of two bearings. |
-| PTANGLEDISTANCE | Creates a point at a bearing and distance. |
-| PTOFFSETLINE | Creates a point at an offset from a found intersection. |
-| PTPRODOFLINEDIST | Creates a point on the production of a line at a specified distance. |
+This plugin is licensed under the terms of the [MIT License](http://opensource.org/licenses/MIT). Please see the [LICENSE](LICENSE) file for full details.
 
