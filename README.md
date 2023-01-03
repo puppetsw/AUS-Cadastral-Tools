@@ -26,12 +26,6 @@ The library was originally developed for AutoCAD R21.0 (2017) and `.NET Framewor
 * `PtOffsetLine` to create a point at an offset from a found intersection.
 * `PtProdOfLineDist` to create a point on the production of a line at a specified distance.
 
-## Screenshots
-
-Example of INVERSECHOS command.
-
-![recordingexample1](https://user-images.githubusercontent.com/79826944/209060657-dab86d82-03af-47b7-9838-ec5d6f2bba45.gif)
-
 ## Building the source
 
 ### 1. Prerequisites
