@@ -37,27 +37,24 @@ Example of INVERSECHOS command.
 ### 1. Prerequisites
 
 - [Visual Studio 2022](https://visualstudio.microsoft.com/vs/)
-- .NET Framework 4.6.1
+- .NET Framework 4.6.1 to 4.8.1
 - Git for Windows
     
-### 2. Cloning the repository
+### 2. Cloning the repo
 
 ```
 git clone https://github.com/puppetsw/AUS-Cadastral-Tools
 ```
 
-### 3. Running the project
+### 3. Running the plugin
 
-To build Cadastral Tools for development, open the `AUS-Cadastral-Tools.sln` item in Visual Studio. 
+To build `Cadastral Tools`, open the `AUS-Cadastral-Tools.sln` item in Visual Studio. 
 
-Change the processor architecture type to x64 in the main toolbar of Visual Studio. See below image.
-![image](https://user-images.githubusercontent.com/79826944/209029395-ae4d389b-1575-4ca5-882c-2e662b393cb1.png)
+If you need to build for a different release of AutoCAD, you can use one of the exisitng release projects by removing the `AUS-Cadastral-Tools.R21` project and adding the relevant existing project from the source directory.
 
-Currently the project is setup to run on AutoCAD 2017 but this can be changed by modifying the `Start action` in the project properties.
+Right click on `AUS-Cadastral-Tools.R21` project in the solution explorer and select Properties.
 
-Right click on `AUS-Cadastral-Tools` in the solution explorer and select Properties.
-
-Click the `Debug` tab and modify the `Start external program` path to match your version of AutoCAD. See below image. You will also need to update the references for the Autodesk DLLs such as `accoremgd.dll` `accui.dll` `acmgd.dll`. 
+Click the `Debug` tab and modify the `Start external program` path to match your version of AutoCAD. See below image.
 
 ![image](https://user-images.githubusercontent.com/79826944/209059436-bd32d16c-2193-432c-8c1c-9bdc8be63505.png)
 
