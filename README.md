@@ -5,13 +5,13 @@
 ![Platforms](https://img.shields.io/badge/Plugins-Windows-lightgray.svg)
 [![License](http://img.shields.io/:license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-# Description
+## Description
 
 Cadastral Tools is a set of tools/commands for cadastral drafting in Autodesk AutoCAD. This plugin contains commands to help with point creation and common measurement practices with cadastral surveying.
 
 The library was originally developed for AutoCAD R21.0 (2017) and `.NET Framework 4.6.1`. I have included project files for later releases of Autodesk AutoCAD.
 
-# Commands
+## Commands
 * `InverseCL` to display inverse information between two points in the command window. 
 * `InverseOS` to display similar information as the `InverseCL` command but displays on the screen using transient graphics.
 * `InverseCHOS` to display inverse information along a baseline specified by two points at perpendicular offsets.
