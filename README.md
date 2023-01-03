@@ -17,7 +17,7 @@ The library was originally developed for AutoCAD R21.0 (2017) and `.NET Framewor
 * `InverseCL` to display inverse information between two points in the command window. 
 * `InverseOS` to display similar information as the `InverseCL` command but displays on the screen using transient graphics.
 * `InverseCHOS` to display inverse information along a baseline specified by two points at perpendicular offsets.
-* `PtDistanceOnline` to create points on a baseline between two specified points. 
+* `PtDistanceOnLine` to create points on a baseline between two specified points. 
 * `PtIntFourPts` to create a point at the intersection of four points.
 * `PtBetweenPts` to create a point between two specified points.
 * `PtOffsetBetweenPts` to create a point between two specified points at an offset from the baseline.
