@@ -13,7 +13,7 @@
  <Components>
   <RuntimeRequirements OS="Win64" Platform="AutoCAD" SeriesMin="R21.0" SeriesMax="R24.2" />
   <ComponentEntry
-   ModuleName=".\Contents\AUS-Cadastral-Tools.dll"
+   ModuleName=".\Contents\R21\AUS-Cadastral-Tools.dll"
    LoadOnAutoCADStartup="true"
    LoadOnCommandInvocation="false"
    AppDescription="Cadastral Tools is a set of tools/commands for cadastral drafting in Autodesk AutoCAD."
