@@ -9,7 +9,7 @@
 
 Cadastral Tools is a set of tools/commands for cadastral drafting in Autodesk AutoCAD. This plugin contains commands to help with point creation and common measurement practices with cadastral surveying.
 
-`.NET Framework 4.6.1` is used to be compatiable with earlier versions of AutoCAD. Release 21.0 to current.
+The library was originally developed for AutoCAD R21.0 (2017) and `.NET Framework 4.6.1`. I have included project files for later releases of Autodesk AutoCAD.
 
 # Commands
 * `InverseCL` to display inverse information between two points in the command window. 
