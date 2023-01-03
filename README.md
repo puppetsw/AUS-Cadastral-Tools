@@ -9,6 +9,8 @@
 
 Cadastral Tools is a set of tools/commands for cadastral drafting in Autodesk AutoCAD. This plugin contains commands to help with point creation and common measurement practices with cadastral surveying.
 
+The commands make use of transient graphics to help displying information to the user.
+
 The library was originally developed for AutoCAD R21.0 (2017) and `.NET Framework 4.6.1`. I have included project files for later releases of Autodesk AutoCAD.
 
 ## Commands
