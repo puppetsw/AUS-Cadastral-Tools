@@ -44,7 +44,7 @@ git clone https://github.com/puppetsw/AUS-Cadastral-Tools
 
 ### 3. Running the plugin
 
-To build `Cadastral Tools`, open the `AUS-Cadastral-Tools.sln` item in Visual Studio. 
+To build `Cadastral Tools` open the `AUS-Cadastral-Tools.sln` file in Visual Studio. 
 
 If you need to build for a different release of AutoCAD, you can use one of the exisitng release projects by removing the `AUS-Cadastral-Tools.R21` project and adding the relevant existing project from the source directory.
 
